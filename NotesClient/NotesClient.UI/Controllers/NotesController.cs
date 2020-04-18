@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NotesClient.ServiceAccess;
 using NotesClient.ServiceAccess.Models;
@@ -18,19 +14,19 @@ namespace NotesClient.UI.Controllers
             _notesService = notesService;
         }
 
-        // GET: Notes
+        // GET: notes
         public async Task<ActionResult> Index()
         {
             return View(await _notesService.GetAllAsync());
         }
 
-        // GET: Notes/Create
+        // GET: notes/create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Notes/Create
+        // POST: notes/create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Note note)

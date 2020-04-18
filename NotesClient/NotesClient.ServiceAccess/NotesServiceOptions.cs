@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NotesClient.ServiceAccess
+﻿namespace NotesClient.ServiceAccess
 {
     public class NotesServiceOptions
     {

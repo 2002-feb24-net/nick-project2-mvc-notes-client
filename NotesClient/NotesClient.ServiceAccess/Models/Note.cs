@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NotesClient.ServiceAccess.Models
 {
@@ -8,14 +7,12 @@ namespace NotesClient.ServiceAccess.Models
     {
         public int Id { get; set; }
 
-        public User Author { get; set; }
-
-        public bool IsPublic { get; set; }
+        public int AuthorId { get; set; }
 
         public string Text { get; set; }
 
-        public DateTime DateModified { get; set; } = DateTime.Now;
+        public DateTime DateModified { get; set; }
 
-        public List<Tag> Tags { get; set; } = new List<Tag>();
+        public List<string> Tags { get; set; } = new List<string>();
     }
 }

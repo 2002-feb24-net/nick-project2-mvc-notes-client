@@ -1,5 +1,3 @@
-using System;
-
 namespace NotesClient.UI.ViewModels
 {
     public class ErrorViewModel

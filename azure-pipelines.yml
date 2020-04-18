@@ -34,12 +34,12 @@ stages:
         publishWebProjects: true
         arguments:
           --configuration $(buildConfiguration)
-          --output $(Build.ArtifactStagingDirectory)/publish
+          --output $(Build.ArtifactStagingDirectory)/app
         modifyOutputPath: false
         zipAfterPublish: false
       displayName: dotnet publish
 
-    - publish: $(Build.ArtifactStagingDirectory)/publish
+    - publish: $(Build.ArtifactStagingDirectory)/app
       artifact: app
       displayName: artifact publish app
 
@@ -50,13 +50,11 @@ stages:
 
     steps:
 
-    # disabled because of bug in SonarCloudPrepare task
     - task: UseDotNet@2
-      enabled: false
       inputs:
         packageType: sdk
-        version: $(sdkVersion)
-      displayName: dotnet $(sdkVersion)
+        version: 2.1.x
+      displayName: dotnet 2.1.x
 
     - task: SonarCloudPrepare@1
       inputs:
@@ -70,16 +68,24 @@ stages:
           sonar.cs.opencover.reportsPaths=$(Common.TestResultsDirectory)/*/coverage.opencover.xml
       displayName: sonarcloud analysis prepare
 
-    - script: dotnet build $(solutionPath)
+    - task: UseDotNet@2
+      inputs:
+        packageType: sdk
+        version: $(sdkVersion)
+      displayName: dotnet $(sdkVersion)
+
+    - script: dotnet build
         --configuration $(buildConfiguration)
+      workingDirectory: $(solutionPath)
       displayName: dotnet build
 
-    - script: dotnet test $(solutionPath)
+    - script: dotnet test
         --configuration $(buildConfiguration)
         --logger trx
         --no-build
         --results-directory $(Common.TestResultsDirectory)
         --settings coverlet.runsettings
+      workingDirectory: $(solutionPath)
       continueOnError: true
       displayName: dotnet test
 
