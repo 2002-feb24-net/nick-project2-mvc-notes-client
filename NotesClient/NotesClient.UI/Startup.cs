@@ -19,6 +19,8 @@ namespace NotesClient.UI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.Configure<NotesServiceOptions>(Configuration.GetSection("NotesService"));
 
             services.AddHttpClient<INotesService, NotesService>();
